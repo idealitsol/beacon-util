@@ -6,16 +6,16 @@ import (
 	timestamp "github.com/golang/protobuf/ptypes/timestamp"
 )
 
-// TimeToGrpcTimestamp converts golang time.Time to google protobuf timestamp.Timestamp
-func TimeToGrpcTimestamp(t *time.Time) *timestamp.Timestamp {
+// GoTimeToGrpcTime converts golang time.Time to google protobuf timestamp.Timestamp
+func GoTimeToGrpcTime(t *time.Time) *timestamp.Timestamp {
 	if t.IsZero() {
 		return nil
 	}
 	return &timestamp.Timestamp{Seconds: t.Unix()}
 }
 
-// GrpcTimestampToTime converts google protobuf timestamp.Timestamp to golang time.Time
-func GrpcTimestampToTime(t *timestamp.Timestamp) *time.Time {
+// GrpcTimeToGoTime converts google protobuf timestamp.Timestamp to golang time.Time
+func GrpcTimeToGoTime(t *timestamp.Timestamp) *time.Time {
 	if t.GetSeconds() == 0 {
 		return nil
 	}
