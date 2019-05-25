@@ -1,6 +1,8 @@
 package util
 
-import "time"
+import (
+	"time"
+)
 
 const (
 	Minute = 1000 * 60
@@ -15,4 +17,14 @@ func GetDuration(value int, duration int) int {
 	return value * duration
 }
 
-type BeaconTime *time.Time
+type BeaconTime struct {
+	*time.Time
+}
+
+// func (s *BeaconTime) IsZero() bool {
+// 	if s.IsZero() {
+// 		return true
+// 	}
+
+// 	return false
+// }
