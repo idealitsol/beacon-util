@@ -8,7 +8,7 @@ import (
 
 // TimeToGrpcTimestamp converts golang time.Time to google protobuf timestamp.Timestamp
 func TimeToGrpcTimestamp(t *time.Time) *timestamp.Timestamp {
-	if t == nil {
+	if t.IsZero() {
 		return nil
 	}
 	return &timestamp.Timestamp{Seconds: t.Unix()}
