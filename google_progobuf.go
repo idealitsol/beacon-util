@@ -8,6 +8,10 @@ import (
 
 // GoTimeToGrpcTime converts golang time.Time to google protobuf timestamp.Timestamp
 func GoTimeToGrpcTime(t *time.Time) *timestamp.Timestamp {
+	if t == nil {
+		return nil
+	}
+
 	if t.IsZero() {
 		return nil
 	}
