@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"reflect"
 	"time"
 
@@ -37,11 +38,18 @@ func GrpcTimeToGoTime(t *timestamp.Timestamp) *time.Time {
 	}
 */
 func TransformGrpcToGo(grpcStruct interface{}, golangStruct interface{}) interface{} {
+	// fmt.Println(grpcStruct)
+	// fmt.Println(golangStruct)
 	grpcs := reflect.ValueOf(grpcStruct).Elem()
+	// fmt.Println("Done 1")
 	golangs := reflect.ValueOf(golangStruct).Elem()
+	// fmt.Println("Done 2")
+
+	// fmt.Println("PASSED......")
 
 	for i := 0; i < grpcs.NumField(); i++ {
 		field := golangs.FieldByName(grpcs.Type().Field(i).Name)
+		// fmt.Println(field.Kind())
 		switch field.Kind() {
 		case reflect.Int:
 		case reflect.Int16:
@@ -57,12 +65,26 @@ func TransformGrpcToGo(grpcStruct interface{}, golangStruct interface{}) interfa
 			golangs.FieldByName(grpcs.Type().Field(i).Name).SetBool(grpcs.Field(i).Interface().(bool))
 		case reflect.Ptr:
 			if grpcs.Field(i).Interface() != nil {
+				fmt.Println(field.Type().String())
 				if field.Type().String() == "*time.Time" {
 					ptime := GrpcTimeToGoTime(grpcs.Field(i).Interface().(*timestamp.Timestamp))
 					golangs.FieldByName(grpcs.Type().Field(i).Name).Set(reflect.ValueOf(ptime))
 				} else if field.Type().String() == "*string" {
 					pstr := grpcs.Field(i).Interface().(string)
 					golangs.FieldByName(grpcs.Type().Field(i).Name).Set(reflect.ValueOf(&pstr))
+				} else {
+
+					// typeee := reflect.TypeOf(golangs.Field(i).Type())
+					// fmt.Println(grpcs.Field(i).Type())
+					// fmt.Println(grpcs.Field(i).Interface())
+					// fmt.Println(golangs.Field(i).Type())
+					// pstr := grpcs.Field(i).Interface()
+					// return TransformGrpcToGo(grpcs.Field(i).Interface(), reflect.New(golangs.Field(i).Type().Elem()).Interface())
+					// return TransformGrpcToGo(grpcs.Field(i).Interface(), reflect.New(golangs.Field(i).Type().Elem()).Interface())
+
+					// golangs.FieldByName(grpcs.Type().Field(i).Name).Set(reflect.ValueOf(pstr))
+					// val := TransformGrpcToGo(grpcs.Field(i).Interface(), golangs.Field(i).Interface())
+					// golangs.FieldByName(grpcs.Type().Field(i).Name).Set(reflect.ValueOf(pstr))
 				}
 			}
 		default:
@@ -72,7 +94,7 @@ func TransformGrpcToGo(grpcStruct interface{}, golangStruct interface{}) interfa
 	return golangs.Interface()
 }
 
-// TransformerGoToGrpc transforms or copy over values from Golang to gRPC
+// TransformGoToGrpc transforms or copy over values from Golang to gRPC
 // Example: transformerGoToGrpc(&data, &pbx.AdminUser{}).(pbx.AdminUser)
 /*
 	pbxAdminUsers := []*pbx.AdminUser{}
@@ -82,7 +104,7 @@ func TransformGrpcToGo(grpcStruct interface{}, golangStruct interface{}) interfa
 		pbxAdminUsers = append(pbxAdminUsers, &data)
 	}
 */
-func TransformerGoToGrpc(golangStruct interface{}, grpcStruct interface{}) interface{} {
+func TransformGoToGrpc(golangStruct interface{}, grpcStruct interface{}) interface{} {
 	grpcs := reflect.ValueOf(grpcStruct).Elem()
 	golangs := reflect.ValueOf(golangStruct).Elem()
 
