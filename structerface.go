@@ -115,6 +115,11 @@ func InvokeEchoHandlerFunction(ctx echo.Context, val interface{}, endpointName s
 	in := make([]reflect.Value, 1)
 	in[0] = reflect.ValueOf(ctx)
 
+	if !v.MethodByName(endpointName).IsValid() {
+		in[0] = reflect.ValueOf(fmt.Errorf("Method not yet implemented"))
+		return in
+	}
+
 	// return v.Call(in)
 	return v.MethodByName(endpointName).Call(in)
 }
