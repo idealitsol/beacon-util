@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/fatih/structs"
+	"github.com/labstack/echo"
 )
 
 // GetGormModelPrimaryKeyField returns the name of gorm primary key from the tag
@@ -105,4 +106,15 @@ func getCondition(f *structs.Field, onlyPrimaryKeys []bool) bool {
 	}
 
 	return (strings.Contains(f.Tag("gorm"), "primary_key") && !strings.Contains(f.Tag("gorm"), "default")) || strings.Contains(f.Tag("gorm"), "not null")
+}
+
+// InvokeEchoHandlerFunction is used to invoke a method/function echo handler on a struct
+func InvokeEchoHandlerFunction(ctx echo.Context, val interface{}, endpointName string) []reflect.Value {
+	v := reflect.ValueOf(val)
+
+	in := make([]reflect.Value, 1)
+	in[0] = reflect.ValueOf(ctx)
+
+	// return v.Call(in)
+	return v.MethodByName(endpointName).Call(in)
 }
