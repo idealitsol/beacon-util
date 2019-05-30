@@ -32,8 +32,8 @@ type ModelCUDBy struct {
 
 // ModelCUDAt defines CreatedAt, UpdatedAt and DeleteAt for gorm
 type ModelCUDAt struct {
-	CreatedAt time.Time  `json:"-"`
-	UpdatedAt time.Time  `json:"-"`
+	CreatedAt *time.Time `json:"-"`
+	UpdatedAt *time.Time `json:"-"`
 	DeletedAt *time.Time `json:"-" sql:"index"`
 }
 
@@ -43,8 +43,8 @@ type ModelCUD struct {
 	UpdatedBy string `json:"-"`
 	DeletedBy string `json:"-"`
 
-	CreatedAt time.Time  `json:"-"`
-	UpdatedAt time.Time  `json:"-"`
+	CreatedAt *time.Time `json:"-"`
+	UpdatedAt *time.Time `json:"-"`
 	DeletedAt *time.Time `json:"-" sql:"index"`
 }
 
