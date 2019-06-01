@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	util "github.com/bekinsoft/beacon-util"
 	"github.com/fatih/structs"
 	"github.com/labstack/echo"
 )
@@ -122,4 +123,40 @@ func InvokeEchoHandlerFunction(ctx echo.Context, val interface{}, endpointName s
 
 	// return v.Call(in)
 	return v.MethodByName(endpointName).Call(in)
+}
+
+// ExtractMapInterface extracts a map[string]interface based on a struct model with BXXUpdatedFields field
+// This is used to correct gorm update to handle golang's default values like 0 for int, "" for string, false for bool, etc
+func ExtractMapInterface(model interface{}) (ret map[string]interface{}) {
+	ret = make(map[string]interface{})
+
+	s := structs.New(model)
+	if data, ok := s.Field("BXXUpdatedFields").Value().([]string); ok {
+		for _, bfield := range data {
+			for _, mfield := range s.Fields() {
+				if mfield.Tag("json") == bfield {
+					ret[util.ToLowerCamel(mfield.Name())] = mfield.Value()
+					break
+				}
+			}
+		}
+	}
+
+	// // We want to measure the time it takes to run this so we wrap around defer
+	// defer func(begin time.Time) {
+	// 	s := structs.New(model)
+	// 	if data, ok := s.Field("BXXUpdatedFields").Value().([]string); ok {
+	// 		for _, bfield := range data {
+	// 			for _, mfield := range s.Fields() {
+	// 				if mfield.Tag("json") == bfield {
+	// 					ret[util.ToLowerCamel(mfield.Name())] = mfield.Value()
+	// 					break
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	fmt.Println(time.Since(begin))
+	// }(time.Now())
+
+	return
 }
