@@ -160,3 +160,13 @@ func ExtractMapInterface(model interface{}) (ret map[string]interface{}) {
 
 	return
 }
+
+// MapKeysToStringArray returns map[string]interface{} to []string
+func MapKeysToStringArray(mapper map[string]interface{}) []string {
+	rv := reflect.ValueOf(mapper)
+	var result []string
+	for _, kv := range rv.MapKeys() {
+		result = append(result, kv.String())
+	}
+	return result
+}
