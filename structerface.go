@@ -11,7 +11,6 @@ import (
 	"strings"
 	"time"
 
-	util "github.com/bekinsoft/beacon-util"
 	"github.com/fatih/structs"
 	"github.com/labstack/echo"
 )
@@ -135,7 +134,7 @@ func ExtractMapInterface(model interface{}) (ret map[string]interface{}) {
 		for _, bfield := range data {
 			for _, mfield := range s.Fields() {
 				if mfield.Tag("json") == bfield {
-					ret[util.ToLowerCamel(mfield.Name())] = mfield.Value()
+					ret[ToLowerCamel(mfield.Name())] = mfield.Value()
 					break
 				}
 			}
