@@ -6,6 +6,8 @@ import (
 	"time"
 
 	timestamp "github.com/golang/protobuf/ptypes/timestamp"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 // GoTimeToGrpcTime converts golang time.Time to google protobuf timestamp.Timestamp
@@ -134,4 +136,12 @@ func TransformGoToGrpc(golangStruct interface{}, grpcStruct interface{}) interfa
 		}
 	}
 	return grpcs.Interface()
+}
+
+// GrpcError return gRPC error
+func GrpcError(code codes.Code, err error) error {
+	return status.Errorf(
+		codes.Internal,
+		err.Error(),
+	)
 }

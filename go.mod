@@ -15,4 +15,5 @@ require (
 	github.com/streadway/amqp v0.0.0-20190404075320-75d898a42a94
 	github.com/valyala/fasttemplate v1.0.1 // indirect
 	golang.org/x/crypto v0.0.0-20190513172903-22d7a77e9e5f
+	google.golang.org/grpc v1.19.0
 )
