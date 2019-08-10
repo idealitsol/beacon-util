@@ -6,7 +6,7 @@ require (
 	github.com/bekinsoft/beacon-util v0.0.4
 	github.com/fatih/structs v1.1.0
 	github.com/golang/protobuf v1.2.0
-	github.com/jinzhu/gorm v1.9.8
+	github.com/jinzhu/gorm v1.9.10
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.2.8 // indirect
 	github.com/lib/pq v1.1.1
