@@ -48,6 +48,17 @@ func ToLowerCamel(s string) string {
 	return toCamelInitCase(s, false)
 }
 
+// ToCamelCaseGoLint removes all trailing whitespaces
+func ToCamelCaseGoLint(input string) string {
+	input = ToCamel(input)
+	input = strings.ReplaceAll(input, "Id", "ID")
+	input = strings.ReplaceAll(input, "Url", "URL")
+	input = strings.ReplaceAll(input, "Ttl", "TTL")
+	input = strings.ReplaceAll(input, "Ip", "IP")
+
+	return input
+}
+
 // Converts a string to CamelCase
 func toCamelInitCase(s string, initCase bool) string {
 	s = addWordBoundariesToNumbers(s)
