@@ -11,6 +11,7 @@ require (
 	github.com/labstack/gommon v0.2.8 // indirect
 	github.com/lib/pq v1.1.1
 	github.com/mattn/go-colorable v0.1.2 // indirect
+	github.com/mitchellh/mapstructure v1.1.2
 	github.com/spf13/viper v1.3.2
 	github.com/streadway/amqp v0.0.0-20190404075320-75d898a42a94
 	github.com/valyala/fasttemplate v1.0.1 // indirect
