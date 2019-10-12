@@ -1,7 +1,6 @@
 package util
 
 import (
-	"fmt"
 	"reflect"
 	"time"
 
@@ -12,7 +11,6 @@ import (
 func MapStructureDecode(model interface{}, out interface{}) {
 	stringToDateTimeHook := func(f reflect.Type, t reflect.Type, data interface{}) (interface{}, error) {
 		if t == reflect.TypeOf(time.Time{}) {
-			fmt.Println(data)
 			return time.Parse(time.RFC3339, data.(string))
 		}
 
