@@ -18,6 +18,10 @@ func ConvertInterfaceToPostgresJSONB(modelMap interface{}, key string) postgres.
 		modelMap = modelMap.(map[string]interface{})[key]
 	}
 
+	if modelMap == nil {
+		modelMap = json.RawMessage("{}")
+	}
+
 	jsonEnc, err := json.Marshal(modelMap)
 	if err != nil {
 		panic("Could not marshal json")
