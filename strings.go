@@ -129,3 +129,13 @@ func StringContainsList(s []string, e string) bool {
 	}
 	return false
 }
+
+// StringFoundInArray checks whether a string is found in array of string
+func StringFoundInArray(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}
