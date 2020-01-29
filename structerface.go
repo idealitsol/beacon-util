@@ -109,6 +109,7 @@ func getCondition(f *structs.Field, onlyPrimaryKeys []bool) bool {
 }
 
 // InvokeEchoHandlerFunction is used to invoke a method/function echo handler on a struct
+// Deprecated
 func InvokeEchoHandlerFunction(ctx echo.Context, val interface{}, endpointName string) []reflect.Value {
 	v := reflect.ValueOf(val)
 
@@ -122,6 +123,18 @@ func InvokeEchoHandlerFunction(ctx echo.Context, val interface{}, endpointName s
 
 	// return v.Call(in)
 	return v.MethodByName(endpointName).Call(in)
+}
+
+// InvokeFunction is a generic function used to invoke any method/function on a struct
+func InvokeFunction(strut interface{}, funcName string, args ...interface{}) []reflect.Value {
+	strat := reflect.ValueOf(strut) // strat or strut as struct
+	in := make([]reflect.Value, len(args))
+
+	for idx, arg := range args {
+		in[idx] = reflect.ValueOf(arg)
+	}
+
+	return strat.MethodByName(funcName).Call(in)
 }
 
 // ExtractMapInterface extracts a map[string]interface based on a struct model with BXXUpdatedFields field
