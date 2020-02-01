@@ -126,6 +126,11 @@ func InvokeEchoHandlerFunction(ctx echo.Context, val interface{}, endpointName s
 }
 
 // InvokeFunction is a generic function used to invoke any method/function on a struct
+/* Example:
+*	ret := util.InvokeFunction(iamc, "AuthLogin", ctx, pbxAuthLoginRequest)
+*	res := ret[0]
+*	err := ret[1]
+ */
 func InvokeFunction(strut interface{}, funcName string, args ...interface{}) []reflect.Value {
 	strat := reflect.ValueOf(strut) // strat or strut as struct
 	in := make([]reflect.Value, len(args))
