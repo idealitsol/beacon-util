@@ -12,6 +12,11 @@ import (
 	"github.com/lib/pq"
 )
 
+// Constant fileds
+const (
+	DefaultUUID = "00000000-0000-0000-0000-000000000000"
+)
+
 // Constraints Constants
 var (
 	ConstraintDuplicateKey = "violates unique constraint \"primary\""
